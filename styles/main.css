@@ -2,13 +2,13 @@
      height: 100%; /* makes sure our HTML takes up 100% of the browser window */
      font-size: 100%;
  }
- 
+
  body {
      font-family: 'Open Sans'; /* sets our font to the "Open Sans" typeface */
      color: white;             /* sets the text color to white */
      min-height: 100%;         /* says the height of the body must be, at minimum, 100% of the window */
  }
- 
+
  body.landing {
      background-color: rgb(58,23,63); /* sets the background color to an RGB value (see below) */
  }
@@ -16,17 +16,17 @@
      height: 100%; /* makes sure our HTML takes up 100% of the browser window */
      font-size: 100%;
  }
- 
+
  body {
      font-family: 'Open Sans'; /* sets our font to the "Open Sans" typeface */
      color: white;             /* sets the text color to white */
      min-height: 100%;         /* says the height of the body must be, at minimum, 100% of the window */
  }
- 
+
  body.landing {
      background-color: rgb(58,23,63); /* sets the background color to an RGB value (see below) */
  }
- 
+
 .navbar {
      position: relative;
      padding: 0.5rem;
@@ -41,7 +41,7 @@
      left: 2rem;
      cursor: pointer;  /* produces the finger-pointer icon when you hover over the logo */
  }
- 
+
  .navbar .links-container {
      display: table;
      position: absolute;
@@ -52,7 +52,7 @@
      /* #3 */
      text-decoration: none;
  }
- 
+
  .links-container .navbar-link {
      display: table-cell;
      position: relative;
@@ -70,11 +70,15 @@
      text-decoration: none;
      cursor: pointer;
  }
- 
+
    /* #5 */
  .links-container .navbar-link:hover {
      color: rgb(233,50,117);
  }
+ .navbar-link:active {
+   color: rgb(233,50,117);
+ background-color: white;
+}
  ...
  .hero-content {
      position: relative; /* positioning will be explained in a resource */
@@ -107,7 +111,7 @@
      -moz-box-sizing: border-box;
      box-sizing: border-box; /* we'll explain this in a resource */
  }
- 
+
  .point {
      display: table-cell;
      position: relative;
@@ -115,11 +119,11 @@
      padding: 2rem;
      text-align: center;
  }
- 
+
  .point .point-title {
      font-size: 1.25rem;
  }
- 
+
  .ion-music-note,
  .ion-radio-waves,
  .ion-iphone {
