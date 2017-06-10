@@ -29,6 +29,21 @@ var albumPicasso = {
      ]
  };
 
+ var albumBrokenClocks = {
+   title: 'Broken Clocks',
+   artist: 'SZA',
+   label: 'RCA Records',
+   year: '2017',
+   albumArtUrl: 'assets/images/album_covers/20.png',
+   songs: [
+     { title: 'Love Galore', duration: '3:30'},
+     { title: 'Drew Barrymore', duration: '3:05'},
+     { title: 'Childs Play', duration: '4:10'},
+     { title: 'Babylon', duration: '3:42'},
+     { title: 'Z', duration: '3:41'},
+   ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
     var template =
        '<tr class="album-view-song-item">'
@@ -67,3 +82,18 @@ var setCurrentAlbum = function(album) {
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
 };
+
+var album = [albumPicasso, albumMarconi, albumBrokenClocks];
+var currentAlbum = 0;
+var toggleAlbum = function (){
+  currentAlbum++;
+    if (currentAlbum >= album.length){
+      currentAlbum = 0;
+    }
+    setCurrentAlbum(album[currentAlbum]);
+  };
+
+var albumCover = document.getElementsByTagName('img')[1];
+  albumCover.addEventListener('click', function(){
+    toggleAlbum(album);
+    });
