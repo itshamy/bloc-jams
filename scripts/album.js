@@ -96,7 +96,7 @@ songListContainer.addEventListener('mouseover', function(event) {
                     this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
                 });
               }
-   }  
+   }
 
 var album = [albumPicasso, albumMarconi, albumBrokenClocks];
 var currentAlbum = 0;
@@ -108,7 +108,8 @@ var toggleAlbum = function (){
     setCurrentAlbum(album[currentAlbum]);
   };
 
-var albumCover = document.getElementsByTagName('img')[1];
+var albumCover = document.getElementsByClassName('album-cover-art')[0];
+console.log(albumCover);
   albumCover.addEventListener('click', function(){
     toggleAlbum(album);
     });
