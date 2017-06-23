@@ -1,4 +1,19 @@
- var createSongRow = function(songNumber, songName, songLength) {
+
+var setSong = function(songNumber){
+   if (currentlyPlayingSongNumber !== songNumber) {
+       currentlyPlayingSongNumber = songNumber;
+       currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+   } else if (currentlyPlayingSongNumber === songNumber) {
+       currentlyPlayingSongNumber = null;
+       currentSongFromAlbum = null;
+   }
+};
+
+var getSongNumberCell = function(number){
+   return currentlyPlayingCell = $('.song-item-number[data-song-number="' + number + '"]');
+};
+
+var createSongRow = function(songNumber, songName, songLength) {
     var template =
        '<tr class="album-view-song-item">'
      + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
@@ -6,29 +21,11 @@
      + '  <td class="song-item-duration">' + songLength + '</td>'
      + '</tr>'
      ;
-
- var setSong = function(songNumber){
-    if (currentlyPlayingSongNumber !== songNumber) {
-        currentlyPlayingSongNumber = songNumber;
-        currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
-    } else if (currentlyPlayingSongNumber === songNumber) {
-        currentlyPlayingSongNumber = null;
-        currentSongFromAlbum = null;
-    }
- };
-
- var getSongNumberCell = function(number){
-    if (currentlyPlayingSongNumber !== null) {
-      currentlyPlayingSongNumber = number;
-      var currentlyPlayingCell = $('.song-item-number[data-song-number="' + number + '"]');
-    }
- };
-
 var $row = $(template);
 var clickHandler = function() {
    var songNumber = parseInt($(this).attr('data-song-number'));
 	 if (currentlyPlayingSongNumber !== null) {
-		var currentlyPlayingCell = getSongNumberCell(number);
+		var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
 		currentlyPlayingCell.html(currentlyPlayingSongNumber);
 	 }
 	 if (currentlyPlayingSongNumber !== songNumber) {
@@ -57,7 +54,7 @@ var onHover = function(event) {
           songNumberCell.html(songNumber);
         }
     };
-         $row.find('.song-item-number').click(clickHandler);
+    $row.find('.song-item-number').click(clickHandler);
     // #2
     $row.hover(onHover, offHover);
     // #3
@@ -92,6 +89,7 @@ var setCurrentAlbum = function(album) {
 var trackIndex = function(album, song) {
     return album.songs.indexOf(song);
 };
+
 var updatePlayerBarSong = function() {
 
     $('.currently-playing .song-name').text(currentSongFromAlbum.title);
