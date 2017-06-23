@@ -7,26 +7,40 @@
      + '</tr>'
      ;
 
+ var setSong = function(songNumber){
+    if (currentlyPlayingSongNumber !== songNumber) {
+        currentlyPlayingSongNumber = songNumber;
+        currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+    } else if (currentlyPlayingSongNumber === songNumber) {
+        currentlyPlayingSongNumber = null;
+        currentSongFromAlbum = null;
+    }
+ };
+
+ var getSongNumberCell = function(number){
+    if (currentlyPlayingSongNumber !== null) {
+      currentlyPlayingSongNumber = number;
+      var currentlyPlayingCell = $('.song-item-number[data-song-number="' + number + '"]');
+    }
+ };
+
 var $row = $(template);
 var clickHandler = function() {
    var songNumber = parseInt($(this).attr('data-song-number'));
 	 if (currentlyPlayingSongNumber !== null) {
-		// Revert to song number for currently playing song because user started playing new song.
-		var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
+		var currentlyPlayingCell = getSongNumberCell(number);
 		currentlyPlayingCell.html(currentlyPlayingSongNumber);
 	 }
 	 if (currentlyPlayingSongNumber !== songNumber) {
 		// Switch from Play -> Pause button to indicate new song is playing.
 		$(this).html(pauseButtonTemplate);
-		currentlyPlayingSongNumber = songNumber;
-    currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+		setSong(songNumber);
     updatePlayerBarSong();
 	 } else if (currentlyPlayingSongNumber === songNumber) {
 		// Switch from Pause -> Play button to pause currently playing song.
 		$(this).html(playButtonTemplate);
      $('.main-controls .play-pause').html(playerBarPlayButton);
-		currentlyPlayingSongNumber = null;
-     currentSongFromAlbum = null;
+		setSong(songNumber);
 	 }
 };
 var onHover = function(event) {
@@ -95,6 +109,7 @@ var playerBarPauseButton = '<span class="ion-pause"></span>';
  var currentAlbum = null;
  var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
+
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
   $(document).ready(function() {
