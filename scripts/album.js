@@ -91,7 +91,6 @@ var trackIndex = function(album, song) {
 };
 
 var updatePlayerBarSong = function() {
-
     $('.currently-playing .song-name').text(currentSongFromAlbum.title);
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
@@ -112,49 +111,46 @@ var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
   $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
-    $previousButton.click(previousSong);
-   $nextButton.click(nextSong);
+    $previousButton.click(nextPreviousSong);
+   $nextButton.click(nextPreviousSong);
   });
-  var nextSong = function() {
-      var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
-      currentSongIndex++;
 
-      if (currentSongIndex >= currentAlbum.songs.length) {
-          currentSongIndex = 0;
-      }
-      var lastSongNumber = currentlyPlayingSongNumber;
-      currentlyPlayingSongNumber = currentSongIndex + 1;
-      currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
-      updatePlayerBarSong();
+  var nextPreviousSong = function(event){
+    var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
+    if ($nextButton){
+          currentSongIndex++;
+            if (currentSongIndex >= currentAlbum.songs.length) {
+            currentSongIndex = 0;
+            }
+          var lastSongNumber = currentlyPlayingSongNumber;
+          currentlyPlayingSongNumber = currentSongIndex + 1;
+          currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
+          updatePlayerBarSong();
 
-      var $nextSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
-      var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
+          var $nextSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
+          var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
 
-      $nextSongNumberCell.html(pauseButtonTemplate);
-      $lastSongNumberCell.html(lastSongNumber);
-  };
+          $nextSongNumberCell.html(pauseButtonTemplate);
+          $lastSongNumberCell.html(lastSongNumber);
+    } else if ($previousButton){
+          currentSongIndex--;
+            if (currentSongIndex < 0) {
+            currentSongIndex = currentAlbum.songs.length - 1;
+            }
+          var lastSongNumber = currentlyPlayingSongNumber;
+          currentlyPlayingSongNumber = currentSongIndex + 1;
+          currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
+          updatePlayerBarSong();
 
-  var previousSong = function() {
-      var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
-      currentSongIndex--;
+          $('.main-controls .play-pause').html(playerBarPauseButton);
 
-      if (currentSongIndex < 0) {
-          currentSongIndex = currentAlbum.songs.length - 1;
-      }
-      var lastSongNumber = currentlyPlayingSongNumber;
-      currentlyPlayingSongNumber = currentSongIndex + 1;
-      currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
-      updatePlayerBarSong();
+          var $previousSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
+          var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
 
-      $('.main-controls .play-pause').html(playerBarPauseButton);
-
-      var $previousSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
-      var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
-
-      $previousSongNumberCell.html(pauseButtonTemplate);
-      $lastSongNumberCell.html(lastSongNumber);
-  };
-
+          $previousSongNumberCell.html(pauseButtonTemplate);
+          $lastSongNumberCell.html(lastSongNumber);
+          }
+     };
 var album = [albumPicasso, albumMarconi, albumBrokenClocks];
 var currentAlbum = 0;
 var toggleAlbum = function (){
