@@ -124,21 +124,39 @@ var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
 var playerBarPlayButton = '<span class="ion-play"></span>';
 var playerBarPauseButton = '<span class="ion-pause"></span>';
-
- // Store state of playing songs
- var currentAlbum = null;
- var currentlyPlayingSongNumber = null;
-var currentSongFromAlbum = null;
- var currentSoundFile = null;
-var currentVolume = 80;
-
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
-  $(document).ready(function() {
-    setCurrentAlbum(albumPicasso);
-    $previousButton.click(previousSong);
-   $nextButton.click(nextSong);
-  });
+var $playPauseButton = $('.main-controls .play-pause');
+
+var togglePlayFromPlayerBar = function (event){
+  var songNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+  if (event.target.className == 'ion-play') {
+     songNumberCell.html(pauseButtonTemplate);
+     $(this).html(playerBarPauseButton);
+     currentSoundFile.play();
+ } else if (currentSoundFile != null && event.target.className == 'ion-pause'){
+     var songNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+     songNumberCell.html(playButtonTemplate);
+     $(this).html(playerBarPlayButton);
+     currentSoundFile.pause();
+ }
+};
+
+// Store state of playing songs
+var currentAlbum = null;
+var currentlyPlayingSongNumber = null;
+var currentSongFromAlbum = null;
+var currentSoundFile = null;
+var currentVolume = 80;
+
+$(document).ready(function() {
+  setCurrentAlbum(albumPicasso);
+  $previousButton.click(previousSong);
+  $nextButton.click(nextSong);
+   $playPauseButton.click(togglePlayFromPlayerBar);
+});
+
+
   var nextSong = function() {
       var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
       currentSongIndex++;
